@@ -33,10 +33,15 @@ func (m mockUUID) Generate() string {
 
 var (
 	CreateTransactionMock func(ctx context.Context, tr domain.Transaction) (err error)
+	GetTransactionsMock   func(ctx context.Context, tr domain.TransactionFilter) ([]*domain.Transaction, error)
 )
 
 type mockTransaction struct{}
 
 func (m mockTransaction) Create(ctx context.Context, tr domain.Transaction) (err error) {
 	return CreateTransactionMock(ctx, tr)
+}
+
+func (m mockTransaction) Get(ctx context.Context, tr domain.TransactionFilter) ([]*domain.Transaction, error) {
+	return GetTransactionsMock(ctx, tr)
 }

@@ -23,9 +23,10 @@ type AccountUseCase interface {
 
 type TransactionRepository interface {
 	Create(ctx context.Context, tr Transaction) (err error)
-	// Get(ctx context.Context, tr TransactionFilter) ([]Transaction, error)
+	Get(ctx context.Context, tr TransactionFilter) ([]*Transaction, error)
 }
 
 type TransactionUseCase interface {
 	Create(ctx context.Context, tr Transaction) (id string, err error)
+	Get(ctx context.Context, tr TransactionFilter) (TransactionsPaging, error)
 }

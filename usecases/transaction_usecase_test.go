@@ -72,12 +72,12 @@ func TestCreateTransaction(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {
-			testCreate(t, tc.Name, tc.FakeTransactionFile, tc.FakeTransactionID, tc.FakeErrCreateTransactionRepository, tc.FakeErrGetAccountRepository, tc.ExpInputGetAccountRepositoryFile, tc.ExpInputCreateTransactionRepositoryFile, tc.ExpTransactionID, tc.ExpErr)
+			testCreateTransaction(t, tc.Name, tc.FakeTransactionFile, tc.FakeTransactionID, tc.FakeErrCreateTransactionRepository, tc.FakeErrGetAccountRepository, tc.ExpInputGetAccountRepositoryFile, tc.ExpInputCreateTransactionRepositoryFile, tc.ExpTransactionID, tc.ExpErr)
 		})
 	}
 }
 
-func testCreate(t *testing.T, name, fakeTrFile, fakeTrID string, fakeErrCreateTrRepo, fakeErrGetAccRepo error, expInGetAccRepoFile, expInCreateTrRepoFile, expID string, expErr error) {
+func testCreateTransaction(t *testing.T, name, fakeTrFile, fakeTrID string, fakeErrCreateTrRepo, fakeErrGetAccRepo error, expInGetAccRepoFile, expInCreateTrRepoFile, expID string, expErr error) {
 	domain.Now = func() time.Time {
 		return domain.TimeSaoPaulo(time.Date(2022, 10, 10, 12, 0, 0, 0, time.UTC))
 	}
@@ -113,4 +113,91 @@ func testCreate(t *testing.T, name, fakeTrFile, fakeTrID string, fakeErrCreateTr
 	domain.CompareWithFile(t, "compare input get account repository", expInGetAccRepoFile, gotInGetAccRepo)
 	domain.CompareWithFile(t, "compare input create transaction repository", expInCreateTrRepoFile, gotInCreateTrRepo)
 
+}
+
+func TestGetTransactions(t *testing.T) {
+	testCases := []struct {
+		Name                                  string
+		FakeFilterTransactionFile             string
+		FakeGetTransactionsRepositoryFile     string
+		FakeErrGetTransactionsRepository      error
+		LimitByPage                           int64
+		ExpInputGetTransactionsRepositoryFile string
+		ExpTransactionsPagingFile             string
+		ExpErr                                error
+	}{
+		{
+			Name:                                  "01_should_get_transactions_return_nil_error_and_next_page",
+			FakeFilterTransactionFile:             "./testdata/transaction/get/01_should_get_transactions_return_nil_error_and_next_page/fake_filter.json",
+			FakeGetTransactionsRepositoryFile:     "./testdata/transaction/get/01_should_get_transactions_return_nil_error_and_next_page/fake_get_transactions_repo.json",
+			LimitByPage:                           4,
+			ExpInputGetTransactionsRepositoryFile: "./testdata/transaction/get/01_should_get_transactions_return_nil_error_and_next_page/exp_in_get_transactions_repo.json",
+			ExpTransactionsPagingFile:             "./testdata/transaction/get/01_should_get_transactions_return_nil_error_and_next_page/exp_transactions_paging.json",
+			ExpErr:                                nil,
+		},
+		{
+			Name:                                  "02_should_get_transactions_return_nil_error_and_no_next_page",
+			FakeFilterTransactionFile:             "./testdata/transaction/get/02_should_get_transactions_return_nil_error_and_no_next_page/fake_filter.json",
+			FakeGetTransactionsRepositoryFile:     "./testdata/transaction/get/02_should_get_transactions_return_nil_error_and_no_next_page/fake_get_transactions_repo.json",
+			LimitByPage:                           20,
+			ExpInputGetTransactionsRepositoryFile: "./testdata/transaction/get/02_should_get_transactions_return_nil_error_and_no_next_page/exp_in_get_transactions_repo.json",
+			ExpTransactionsPagingFile:             "./testdata/transaction/get/02_should_get_transactions_return_nil_error_and_no_next_page/exp_transactions_paging.json",
+			ExpErr:                                nil,
+		},
+		{
+			Name:                                  "03_should_get_transactions_return_invalid_operation_type",
+			FakeFilterTransactionFile:             "./testdata/transaction/get/03_should_get_transactions_return_invalid_operation_type/fake_filter.json",
+			FakeGetTransactionsRepositoryFile:     "./testdata/transaction/get/03_should_get_transactions_return_invalid_operation_type/fake_get_transactions_repo.json",
+			LimitByPage:                           20,
+			ExpInputGetTransactionsRepositoryFile: "./testdata/transaction/get/03_should_get_transactions_return_invalid_operation_type/exp_in_get_transactions_repo.json",
+			ExpTransactionsPagingFile:             "./testdata/transaction/get/03_should_get_transactions_return_invalid_operation_type/exp_transactions_paging.json",
+			ExpErr:                                domain.ErrInvalidOperationType,
+		},
+		{
+			Name:                                  "04_should_get_transactions_return_unknow_error_on_get_transaction_repo",
+			FakeFilterTransactionFile:             "./testdata/transaction/get/04_should_get_transactions_return_unknow_error_on_get_transaction_repo/fake_filter.json",
+			FakeGetTransactionsRepositoryFile:     "./testdata/transaction/get/04_should_get_transactions_return_unknow_error_on_get_transaction_repo/fake_get_transactions_repo.json",
+			LimitByPage:                           20,
+			FakeErrGetTransactionsRepository:      domain.ErrUnknow,
+			ExpInputGetTransactionsRepositoryFile: "./testdata/transaction/get/04_should_get_transactions_return_unknow_error_on_get_transaction_repo/exp_in_get_transactions_repo.json",
+			ExpTransactionsPagingFile:             "./testdata/transaction/get/04_should_get_transactions_return_unknow_error_on_get_transaction_repo/exp_transactions_paging.json",
+			ExpErr:                                domain.ErrUnknow,
+		},
+		{
+			Name:                                  "05_should_get_transactions_return_not_found_from_transactions_paging",
+			FakeFilterTransactionFile:             "./testdata/transaction/get/05_should_get_transactions_return_not_found_from_transactions_paging/fake_filter.json",
+			FakeGetTransactionsRepositoryFile:     "./testdata/transaction/get/05_should_get_transactions_return_not_found_from_transactions_paging/fake_get_transactions_repo.json",
+			LimitByPage:                           20,
+			ExpInputGetTransactionsRepositoryFile: "./testdata/transaction/get/05_should_get_transactions_return_not_found_from_transactions_paging/exp_in_get_transactions_repo.json",
+			ExpTransactionsPagingFile:             "./testdata/transaction/get/05_should_get_transactions_return_not_found_from_transactions_paging/exp_transactions_paging.json",
+			ExpErr:                                domain.ErrTransactionsNotFound,
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.Name, func(t *testing.T) {
+			testGetTransactions(t, tc.Name, tc.FakeFilterTransactionFile, tc.FakeGetTransactionsRepositoryFile, tc.LimitByPage, tc.FakeErrGetTransactionsRepository, tc.ExpInputGetTransactionsRepositoryFile, tc.ExpTransactionsPagingFile, tc.ExpErr)
+		})
+	}
+}
+
+func testGetTransactions(t *testing.T, name, fakeFilterTrFile, fakeGetTrsRepoFile string, limitByPage int64, fakeErrGetTrRepo error, expInGetTrRepoFile, expTrsPagFile string, expErr error) {
+	domain.LimitByPage = limitByPage
+	fakeFilterTr := domain.ReadJSON[domain.TransactionFilter](t, fakeFilterTrFile)
+	var gotInGetTrRepo domain.TransactionFilter
+	GetTransactionsMock = func(ctx context.Context, tr domain.TransactionFilter) ([]*domain.Transaction, error) {
+		gotInGetTrRepo = tr
+		return domain.ReadJSON[[]*domain.Transaction](t, fakeGetTrsRepoFile), fakeErrGetTrRepo
+	}
+
+	useCase := usecases.NewTransactionUseCase(mockTransaction{}, mockAccount{})
+	gotTrsPag, gotErr := useCase.Get(context.Background(), fakeFilterTr)
+	if *update {
+		domain.CreateJSON(t, expTrsPagFile, gotTrsPag)
+		domain.CreateJSON(t, expInGetTrRepoFile, gotInGetTrRepo)
+		return
+	}
+
+	assert.Equal(t, expErr, gotErr, "exp error should be equal got error")
+	domain.CompareWithFile(t, "compare input get transaction repository", expInGetTrRepoFile, gotInGetTrRepo)
+	domain.CompareWithFile(t, "compare return get transactions paging", expTrsPagFile, gotTrsPag)
 }

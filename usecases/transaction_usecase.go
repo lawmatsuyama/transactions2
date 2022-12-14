@@ -39,3 +39,23 @@ func (useCase TransactionUseCase) Create(ctx context.Context, tr domain.Transact
 
 	return tr.ID, nil
 }
+
+func (useCase TransactionUseCase) Get(ctx context.Context, filter domain.TransactionFilter) (trsPag domain.TransactionsPaging, err error) {
+	if err = filter.IsValid(); err != nil {
+		return
+	}
+
+	trs, err := useCase.transaction.Get(ctx, filter)
+	if err != nil {
+		return
+	}
+
+	trsPag = domain.NewTransactionsPage(trs, filter.Paging)
+	if err = trsPag.IsValid(); err != nil {
+		return
+	}
+
+	trsPag.SetNextPaging()
+
+	return
+}
