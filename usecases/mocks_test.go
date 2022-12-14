@@ -9,7 +9,6 @@ import (
 var (
 	CreateAccountMock func(ctx context.Context, acc domain.Account) (err error)
 	GetAccountMock    func(ctx context.Context, filter domain.AccountFilter) (accs []domain.Account, err error)
-	UUIDGenerateMock  func() string
 )
 
 type mockAccount struct{}
@@ -22,8 +21,22 @@ func (m mockAccount) Get(ctx context.Context, filter domain.AccountFilter) (accs
 	return GetAccountMock(ctx, filter)
 }
 
+var (
+	UUIDGenerateMock func() string
+)
+
 type mockUUID struct{}
 
 func (m mockUUID) Generate() string {
 	return UUIDGenerateMock()
+}
+
+var (
+	CreateTransactionMock func(ctx context.Context, tr domain.Transaction) (err error)
+)
+
+type mockTransaction struct{}
+
+func (m mockTransaction) Create(ctx context.Context, tr domain.Transaction) (err error) {
+	return CreateTransactionMock(ctx, tr)
 }

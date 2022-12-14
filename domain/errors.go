@@ -37,5 +37,7 @@ var (
 	ErrTransactionZeroAmount = ErrorTransaction{ErrorOrigin: errors.New("transaction amount is zero"), StatusCode: http.StatusBadRequest}
 	ErrInvalidOperationType  = ErrorTransaction{ErrorOrigin: errors.New("invalid transaction operation type"), StatusCode: http.StatusBadRequest}
 	ErrInvalidTransaction    = ErrorTransaction{ErrorOrigin: errors.New("invalid transaction"), StatusCode: http.StatusBadRequest}
+	ErrTransactionsNotFound  = ErrorTransaction{ErrorOrigin: errors.New("transactions not found"), StatusCode: http.StatusNotFound}
+	ErrAccountNotFound       = ErrorTransaction{ErrorOrigin: errors.New("account not found"), StatusCode: http.StatusNotFound}
 	ErrUnknow                = ErrorTransaction{ErrorOrigin: errors.New("unknow error"), StatusCode: http.StatusBadRequest}
 )

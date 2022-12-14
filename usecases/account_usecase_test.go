@@ -26,6 +26,7 @@ func TestCreateAccount(t *testing.T) {
 			FakeAccountID:                "123456",
 			ExpInputCreateRepositoryFile: "./testdata/account/create/01_should_create_account_return_error_nil/exp_in_create_repository.json",
 			ExpID:                        "123456",
+			ExpError:                     nil,
 		},
 		{
 			Name:                         "02_should_create_account_return_invalid_document_error",

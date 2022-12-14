@@ -1,0 +1,8 @@
+{
+	"id": "123456",
+	"account_id": "123456",
+	"description": "teste1",
+	"operation_type_id": 1,
+	"amount": -14.3,
+	"event_date": "2022-10-10T09:00:00-03:00"
+}
