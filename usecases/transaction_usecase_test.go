@@ -60,6 +60,15 @@ func TestCreateTransaction(t *testing.T) {
 			ExpTransactionID:                        "",
 			ExpErr:                                  domain.ErrInvalidOperationType,
 		},
+		{
+			Name:                                    "05_should_create_transaction_payment_return_nil_error",
+			FakeTransactionFile:                     "./testdata/transaction/create/05_should_create_transaction_payment_return_nil_error/fake_transaction.json",
+			FakeTransactionID:                       "123456",
+			ExpInputGetAccountRepositoryFile:        "./testdata/transaction/create/05_should_create_transaction_payment_return_nil_error/exp_in_get_account_repo.json",
+			ExpInputCreateTransactionRepositoryFile: "./testdata/transaction/create/05_should_create_transaction_payment_return_nil_error/exp_in_create_account_repo.json",
+			ExpTransactionID:                        "123456",
+			ExpErr:                                  nil,
+		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {

@@ -2,5 +2,5 @@
     "account_id": "123456",
     "description": "teste1",
     "operation_type_id": 1,
-    "amount": 14.30
+    "amount": -14.30
 }
