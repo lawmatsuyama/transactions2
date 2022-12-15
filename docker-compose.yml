@@ -1,8 +1,8 @@
 version: "3.5"
 services:
-  transactions:
-    hostname: transactions
-    image: transactions:latest
+  pismo-transactions:
+    hostname: pismo-transactions
+    image: pismo-transactions:latest
     build:
       context: .
     restart: always
@@ -12,7 +12,6 @@ services:
       - .env
     depends_on:
       - mongodb
-      - rabbitmq
   mongodb:
     image: "mongo:4.0.19"
     environment:
@@ -23,11 +22,3 @@ services:
       - "27017:27017"
     volumes:
       - ./db:/docker-entrypoint-initdb.d:ro
-  rabbitmq:
-    image: "rabbitmq:3-management-alpine"
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest

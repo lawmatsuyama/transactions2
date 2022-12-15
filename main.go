@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	serviceName = "accounts-service"
+	serviceName = "pismo-transactions"
 )
 
 func init() {
@@ -21,9 +21,9 @@ func init() {
 	LoggerSetup()
 }
 
-// @title Swagger Accounts API
+// @title Swagger Pismo Transactions API
 // @version 2.0
-// @description API to create,list account and transactions of user.
+// @description API to create and list accounts and transactions of user.
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name Lawrence Matsuyama

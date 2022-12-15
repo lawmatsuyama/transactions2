@@ -41,6 +41,6 @@ func StartDependencies(ctxWithCancel context.Context) {
 	accountAPI := apimanager.NewAccountAPI(accountUseCase)
 
 	handler := apimanager.NewHandler(accountAPI, transactionAPI)
-	apimanager.StartAPI(ctxWithCancel, handler, "8080", "accounts-service")
+	apimanager.StartAPI(ctxWithCancel, handler, "8080", "pismo-transactions")
 
 }
