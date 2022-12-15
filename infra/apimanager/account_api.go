@@ -6,7 +6,6 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/lawmatsuyama/pismo-transactions/domain"
-	"github.com/sirupsen/logrus"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -69,7 +68,7 @@ func (api AccountAPI) GetByID(w http.ResponseWriter, r *http.Request) {
 		HandleResponse[*string](w, r, nil, domain.ErrInvalidAccount)
 		return
 	}
-	l := logrus.WithField("account_id", accID)
+	l := log.WithField("account_id", accID)
 	request := domain.AccountFilter{ID: accID}
 	ctx := context.Background()
 	accs, err := api.Account.Get(ctx, request)

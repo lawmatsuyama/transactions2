@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/lawmatsuyama/pismo-transactions/domain"
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 // TransactionUseCase implements domain.TransactionUseCase interface
@@ -23,7 +23,7 @@ func NewTransactionUseCase(transactionRepository domain.TransactionRepository, a
 
 // Create check if transaction is valid and create it in application
 func (useCase TransactionUseCase) Create(ctx context.Context, tr domain.Transaction) (id string, err error) {
-	l := logrus.WithField("transaction", tr)
+	l := log.WithField("transaction", tr)
 	if err = tr.IsValid(); err != nil {
 		l.WithError(err).Info("transaction is invalid")
 		return
@@ -55,7 +55,7 @@ func (useCase TransactionUseCase) Create(ctx context.Context, tr domain.Transact
 
 // Get returns transactions by given TransactionFilter
 func (useCase TransactionUseCase) Get(ctx context.Context, filter domain.TransactionFilter) (trsPag domain.TransactionsPaging, err error) {
-	l := logrus.WithField("filter", filter)
+	l := log.WithField("filter", filter)
 	if err = filter.IsValid(); err != nil {
 		l.WithError(err).Info("filter is invalid")
 		return
