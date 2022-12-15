@@ -7,6 +7,7 @@ var Now = func() time.Time {
 	return time.Now()
 }
 
+// TimeSaoPaulo returns the time in America/Sao_Paulo timezone
 func TimeSaoPaulo(t time.Time) time.Time {
 	return t.In(time.FixedZone("America/Sao_Paulo", -3*60*60))
 }

@@ -7,17 +7,21 @@ var mapOperationType = map[OperationType]OperationTypeDetails{
 	4: NewOperationTypeDetails("PAGAMENTO", 1.0),
 }
 
+// OperationType represents an operation type of transaction
 type OperationType int64
 
+// OperationTypeDetails contains details about operation type
 type OperationTypeDetails struct {
 	Description string
 	AmountSign  float64
 }
 
+// NewOperationTypeDetails returns a new OperationTypeDetails
 func NewOperationTypeDetails(desc string, sign float64) OperationTypeDetails {
 	return OperationTypeDetails{Description: desc, AmountSign: sign}
 }
 
+// String returns OperationType in string type
 func (oper OperationType) String() string {
 	operDetails, ok := mapOperationType[oper]
 	if !ok {
@@ -27,6 +31,7 @@ func (oper OperationType) String() string {
 	return operDetails.Description
 }
 
+// IsValid returns error if operation type is invalid
 func (oper OperationType) IsValid() error {
 	if _, ok := mapOperationType[oper]; !ok {
 		return ErrInvalidOperationType
@@ -35,6 +40,7 @@ func (oper OperationType) IsValid() error {
 	return nil
 }
 
+// Sign returns the math sign related to the operation type
 func (oper OperationType) Sign() float64 {
 	operDetails, ok := mapOperationType[oper]
 	if !ok {

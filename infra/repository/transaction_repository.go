@@ -64,7 +64,7 @@ func (db TransactionRepository) Get(ctx context.Context, filterTr domain.Transac
 
 	if err != nil {
 		l.WithError(err).Error("Failed to get transactions")
-		err = domain.ErrUnknow
+		err = domain.ErrUnknown
 		return
 	}
 
@@ -72,7 +72,7 @@ func (db TransactionRepository) Get(ctx context.Context, filterTr domain.Transac
 	err = cur.All(ctx, &trs)
 	if err != nil {
 		l.WithError(err).Error("Failed to iterate over transactions")
-		err = domain.ErrUnknow
+		err = domain.ErrUnknown
 		return
 	}
 

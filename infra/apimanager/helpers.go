@@ -38,6 +38,6 @@ func HandleResponse[T any](w http.ResponseWriter, r *http.Request, in T, err err
 	w.WriteHeader(statusCode)
 	if _, err := w.Write(res); err != nil {
 		logrus.WithError(err).Error("couldnt send response to writer")
-		http.Error(w, domain.ErrUnknow.Error(), http.StatusBadRequest)
+		http.Error(w, domain.ErrUnknown.Error(), http.StatusBadRequest)
 	}
 }

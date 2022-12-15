@@ -61,7 +61,7 @@ func (db AccountRepository) Get(ctx context.Context, filterAcc domain.AccountFil
 
 	if err != nil {
 		l.WithError(err).Error("Failed to get accounts")
-		err = domain.ErrUnknow
+		err = domain.ErrUnknown
 		return
 	}
 
@@ -69,7 +69,7 @@ func (db AccountRepository) Get(ctx context.Context, filterAcc domain.AccountFil
 	err = cur.All(ctx, &accs)
 	if err != nil {
 		l.WithError(err).Error("Failed to iterate over accounts")
-		err = domain.ErrUnknow
+		err = domain.ErrUnknown
 		return
 	}
 

@@ -41,9 +41,9 @@ func TestCreateAccount(t *testing.T) {
 			FakeAccountFile:              "./testdata/account/create/03_should_create_account_return_error_on_repository/fake_account.json",
 			FakeAccountID:                "999999",
 			ExpInputCreateRepositoryFile: "./testdata/account/create/03_should_create_account_return_error_on_repository/exp_in_create_repository.json",
-			FakeErrCreateRepository:      domain.ErrUnknow,
+			FakeErrCreateRepository:      domain.ErrUnknown,
 			ExpID:                        "",
-			ExpError:                     domain.ErrUnknow,
+			ExpError:                     domain.ErrUnknown,
 		},
 	}
 	for _, tc := range testCases {
@@ -111,10 +111,10 @@ func TestGetAccounts(t *testing.T) {
 			Name:                             "03_should_get_accounts_return_error_on_get_account_repository",
 			FakeFilterFile:                   "./testdata/account/get/03_should_get_accounts_return_error_on_get_account_repository/fake_filter.json",
 			FakeGetAccountsRepositoryFile:    "./testdata/account/get/03_should_get_accounts_return_error_on_get_account_repository/fake_get_accounts.json",
-			FakeErrGetAccountRepository:      domain.ErrUnknow,
+			FakeErrGetAccountRepository:      domain.ErrUnknown,
 			ExpInputGetAccountRepositoryFile: "./testdata/account/get/03_should_get_accounts_return_error_on_get_account_repository/exp_in_get_account_repository.json",
 			ExpAccountsFile:                  "./testdata/account/get/03_should_get_accounts_return_error_on_get_account_repository/exp_accounts.json",
-			ExpError:                         domain.ErrUnknow,
+			ExpError:                         domain.ErrUnknown,
 		},
 	}
 	for _, tc := range testCases {

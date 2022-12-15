@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Transaction represents a transaction of an account
 type Transaction struct {
 	ID              string        `json:"id" bson:"_id"`
 	AccountID       string        `json:"account_id" bson:"account_id"`
@@ -14,6 +15,7 @@ type Transaction struct {
 	EventDate       time.Time     `json:"event_date" bson:"event_date"`
 }
 
+// IsValid check if transaction is valid
 func (tr Transaction) IsValid() error {
 	if tr.Amount == 0 {
 		return ErrTransactionZeroAmount
@@ -22,16 +24,19 @@ func (tr Transaction) IsValid() error {
 	return tr.OperationTypeID.IsValid()
 }
 
+// SetAmountSign set amount sign according the operation type
 func (tr *Transaction) SetAmountSign() {
 	tr.Amount = math.Abs(tr.Amount) * tr.OperationTypeID.Sign()
 }
 
+// SetID generate and set a new UUID in transaction ID
 func (tr *Transaction) SetID() {
 	if tr.ID == "" {
 		tr.ID = UUID.Generate()
 	}
 }
 
-func (tr *Transaction) SetEventDate() {
+// SetEventDate set the current time in transaction event date
+func (tr *Transaction) SetCurrentTimeToEventDate() {
 	tr.EventDate = Now()
 }

@@ -6,12 +6,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// DocumentNumber represents an user document number
 type DocumentNumber string
 
+// String returns document number in string type
 func (doc DocumentNumber) String() string {
 	return string(doc)
 }
 
+// IsValid returns error if document number is invalid
 func (doc DocumentNumber) IsValid() error {
 	if len(doc) != 11 {
 		return ErrInvalidDocumentNumber

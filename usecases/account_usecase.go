@@ -20,7 +20,7 @@ func (useCase AccountUseCase) Create(ctx context.Context, acc domain.Account) (i
 	}
 
 	acc.SetID()
-	acc.SetCreatedAt()
+	acc.SetCurrentTimeToCreatedAt()
 	err = useCase.account.Create(ctx, acc)
 	if err != nil {
 		return

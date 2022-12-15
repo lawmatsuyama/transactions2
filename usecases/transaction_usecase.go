@@ -34,7 +34,7 @@ func (useCase TransactionUseCase) Create(ctx context.Context, tr domain.Transact
 
 	tr.SetID()
 	tr.SetAmountSign()
-	tr.SetEventDate()
+	tr.SetCurrentTimeToEventDate()
 
 	err = useCase.transaction.Create(ctx, tr)
 	if err != nil {
