@@ -6,6 +6,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/lawmatsuyama/pismo-transactions/domain"
+	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 // AccountAPI represents an API for account
@@ -36,6 +38,7 @@ func (api AccountAPI) Create(w http.ResponseWriter, r *http.Request) {
 		HandleResponse[*string](w, r, nil, domain.ErrInvalidAccount)
 		return
 	}
+	l := log.WithField("account", request)
 
 	ctx := context.Background()
 	id, err := api.Account.Create(ctx, request.ToAccount())
@@ -45,6 +48,7 @@ func (api AccountAPI) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	HandleResponse(w, r, FromAccountID(id), err)
+	l.Info("create account ok")
 }
 
 // GetByID godoc
@@ -65,6 +69,7 @@ func (api AccountAPI) GetByID(w http.ResponseWriter, r *http.Request) {
 		HandleResponse[*string](w, r, nil, domain.ErrInvalidAccount)
 		return
 	}
+	l := logrus.WithField("account_id", accID)
 	request := domain.AccountFilter{ID: accID}
 	ctx := context.Background()
 	accs, err := api.Account.Get(ctx, request)
@@ -79,4 +84,5 @@ func (api AccountAPI) GetByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	HandleResponse(w, r, FromAccount(accs[0]), err)
+	l.Info("get account by id returned ok")
 }

@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/lawmatsuyama/pismo-transactions/domain"
+	log "github.com/sirupsen/logrus"
 )
 
 // TransactionAPI represents an API for transaction
@@ -35,6 +36,7 @@ func (api TransactionAPI) Create(w http.ResponseWriter, r *http.Request) {
 		HandleResponse[*string](w, r, nil, domain.ErrInvalidAccount)
 		return
 	}
+	l := log.WithField("transaction", request)
 
 	ctx := context.Background()
 	id, err := api.Transaction.Create(ctx, request.ToTransaction())
@@ -44,6 +46,7 @@ func (api TransactionAPI) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	HandleResponse(w, r, FromTransactionID(id), err)
+	l.Info("create transaction ok")
 }
 
 // Get godoc
@@ -64,7 +67,7 @@ func (api TransactionAPI) Get(w http.ResponseWriter, r *http.Request) {
 		HandleResponse[*string](w, r, nil, domain.ErrInvalidTransaction)
 		return
 	}
-
+	l := log.WithField("filter", request)
 	ctx := context.Background()
 	trsPag, err := api.Transaction.Get(ctx, request.ToTransaction())
 	if err != nil {
@@ -73,4 +76,5 @@ func (api TransactionAPI) Get(w http.ResponseWriter, r *http.Request) {
 	}
 
 	HandleResponse(w, r, FromTransactionPaging(trsPag), err)
+	l.Info("get transaction returned ok")
 }
