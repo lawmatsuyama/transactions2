@@ -1,0 +1,252 @@
+basePath: /
+definitions:
+  apimanager.CreateAccountRequest:
+    properties:
+      document_number:
+        type: string
+    type: object
+  apimanager.CreateAccountResponse:
+    properties:
+      account_id:
+        type: string
+    type: object
+  apimanager.CreateTransactionRequest:
+    properties:
+      account_id:
+        type: string
+      amount:
+        type: number
+      description:
+        type: string
+      operation_type_id:
+        type: integer
+    type: object
+  apimanager.CreateTransactionResponse:
+    properties:
+      id:
+        type: string
+    type: object
+  apimanager.GenericResponse-apimanager_CreateAccountResponse:
+    properties:
+      error:
+        type: string
+      result:
+        $ref: '#/definitions/apimanager.CreateAccountResponse'
+    type: object
+  apimanager.GenericResponse-apimanager_CreateTransactionResponse:
+    properties:
+      error:
+        type: string
+      result:
+        $ref: '#/definitions/apimanager.CreateTransactionResponse'
+    type: object
+  apimanager.GenericResponse-apimanager_GetAccountResponse:
+    properties:
+      error:
+        type: string
+      result:
+        $ref: '#/definitions/apimanager.GetAccountResponse'
+    type: object
+  apimanager.GenericResponse-apimanager_GetTransactionResponse:
+    properties:
+      error:
+        type: string
+      result:
+        $ref: '#/definitions/apimanager.GetTransactionResponse'
+    type: object
+  apimanager.GenericResponse-string:
+    properties:
+      error:
+        type: string
+      result:
+        type: string
+    type: object
+  apimanager.GetAccountResponse:
+    properties:
+      account_id:
+        type: string
+      document_number:
+        type: string
+    type: object
+  apimanager.GetTransactionRequest:
+    properties:
+      account_id:
+        type: string
+      amount_greater:
+        type: number
+      amount_less:
+        type: number
+      description:
+        type: string
+      event_date_from:
+        type: string
+      event_date_to:
+        type: string
+      id:
+        type: string
+      operation_type_id:
+        type: integer
+      paging:
+        $ref: '#/definitions/apimanager.Paging'
+    type: object
+  apimanager.GetTransactionResponse:
+    properties:
+      paging:
+        $ref: '#/definitions/apimanager.Paging'
+      transactions:
+        items:
+          $ref: '#/definitions/apimanager.Transaction'
+        type: array
+    type: object
+  apimanager.Paging:
+    properties:
+      next_page:
+        type: integer
+      page:
+        type: integer
+    type: object
+  apimanager.Transaction:
+    properties:
+      account_id:
+        type: string
+      amount:
+        type: number
+      description:
+        type: string
+      event_date:
+        type: string
+      id:
+        type: string
+      operation_type_id:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: law.matsuyama@outlook.com
+    name: Lawrence Matsuyama
+  description: API to create,list account and transactions of user.
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Accounts API
+  version: "2.0"
+paths:
+  /accounts:
+    post:
+      consumes:
+      - application/json
+      description: Receives account data and registered it in application.
+      parameters:
+      - description: Create Account Request
+        in: body
+        name: create_account_request
+        required: true
+        schema:
+          $ref: '#/definitions/apimanager.CreateAccountRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-apimanager_CreateAccountResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-string'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-string'
+      summary: API to create account in the application.
+      tags:
+      - accounts
+  /accounts/{accountID}:
+    get:
+      consumes:
+      - application/json
+      description: Receives path param account ID.
+      parameters:
+      - description: Account ID
+        in: path
+        name: accountID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-apimanager_GetAccountResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-string'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-string'
+      summary: API to get account by ID in the application.
+      tags:
+      - accounts
+  /transactions:
+    post:
+      consumes:
+      - application/json
+      description: Receives transaction data and registered it in application.
+      parameters:
+      - description: Create Transaction Request
+        in: body
+        name: create_transaction_request
+        required: true
+        schema:
+          $ref: '#/definitions/apimanager.CreateTransactionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-apimanager_CreateTransactionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-string'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-string'
+      summary: API to create transaction in the application.
+      tags:
+      - transactions
+  /transactions/query:
+    post:
+      consumes:
+      - application/json
+      description: List transactions by giving filter.
+      parameters:
+      - description: Get Transaction Request
+        in: body
+        name: get_transaction_request
+        required: true
+        schema:
+          $ref: '#/definitions/apimanager.GetTransactionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-apimanager_GetTransactionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-string'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apimanager.GenericResponse-string'
+      summary: API to get transactions by filter.
+      tags:
+      - transactions
+swagger: "2.0"

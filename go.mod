@@ -24,8 +24,13 @@ require (
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/google/go-cmp v0.5.9
 	github.com/google/uuid v1.3.0
+	github.com/joho/godotenv v1.4.0
+	github.com/joonix/log v0.0.0-20200409080653-9c1d2ceb5f1d
+	github.com/rs/cors v1.8.2
 	github.com/sirupsen/logrus v1.9.0
 	github.com/stretchr/testify v1.8.1
+	github.com/swaggo/http-swagger v1.3.3
+	github.com/swaggo/swag v1.8.1
 	github.com/testcontainers/testcontainers-go v0.16.0
 	go.mongodb.org/mongo-driver v1.11.1
 )
@@ -33,6 +38,7 @@ require (
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.6 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
+	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/Microsoft/go-winio v0.5.2 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/buger/goterm v1.0.4 // indirect
@@ -59,6 +65,10 @@ require (
 	github.com/fvbommel/sortorder v1.0.2 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
+	github.com/go-openapi/jsonpointer v0.19.5 // indirect
+	github.com/go-openapi/jsonreference v0.20.0 // indirect
+	github.com/go-openapi/spec v0.20.6 // indirect
+	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/gofrs/flock v0.8.0 // indirect
 	github.com/gogo/googleapis v1.4.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
@@ -76,10 +86,12 @@ require (
 	github.com/hashicorp/go-version v1.6.0 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
+	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/klauspost/compress v1.15.9 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
+	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
@@ -114,6 +126,7 @@ require (
 	github.com/serialx/hashring v0.0.0-20190422032157-8b2912629002 // indirect
 	github.com/spf13/cobra v1.6.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/swaggo/files v0.0.0-20220610200504-28940afbdbfe // indirect
 	github.com/theupdateframework/notary v0.7.0 // indirect
 	github.com/tonistiigi/fsutil v0.0.0-20220930225714-4638ad635be5 // indirect
 	github.com/tonistiigi/units v0.0.0-20180711220420-6950e57a87ea // indirect
@@ -146,6 +159,7 @@ require (
 	golang.org/x/term v0.0.0-20220526004731-065cf7ba2467 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20220210224613-90d013bbcef8 // indirect
+	golang.org/x/tools v0.1.11 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20220617124728-180714bec0ad // indirect
 	google.golang.org/grpc v1.47.0 // indirect

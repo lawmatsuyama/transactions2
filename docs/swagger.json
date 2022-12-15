@@ -1,0 +1,388 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API to create,list account and transactions of user.",
+        "title": "Swagger Accounts API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Lawrence Matsuyama",
+            "email": "law.matsuyama@outlook.com"
+        },
+        "version": "2.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/accounts": {
+            "post": {
+                "description": "Receives account data and registered it in application.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "API to create account in the application.",
+                "parameters": [
+                    {
+                        "description": "Create Account Request",
+                        "name": "create_account_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.CreateAccountRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-apimanager_CreateAccountResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-string"
+                        }
+                    }
+                }
+            }
+        },
+        "/accounts/{accountID}": {
+            "get": {
+                "description": "Receives path param account ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "API to get account by ID in the application.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Account ID",
+                        "name": "accountID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-apimanager_GetAccountResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-string"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions": {
+            "post": {
+                "description": "Receives transaction data and registered it in application.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "transactions"
+                ],
+                "summary": "API to create transaction in the application.",
+                "parameters": [
+                    {
+                        "description": "Create Transaction Request",
+                        "name": "create_transaction_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.CreateTransactionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-apimanager_CreateTransactionResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-string"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/query": {
+            "post": {
+                "description": "List transactions by giving filter.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "transactions"
+                ],
+                "summary": "API to get transactions by filter.",
+                "parameters": [
+                    {
+                        "description": "Get Transaction Request",
+                        "name": "get_transaction_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GetTransactionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-apimanager_GetTransactionResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/apimanager.GenericResponse-string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "apimanager.CreateAccountRequest": {
+            "type": "object",
+            "properties": {
+                "document_number": {
+                    "type": "string"
+                }
+            }
+        },
+        "apimanager.CreateAccountResponse": {
+            "type": "object",
+            "properties": {
+                "account_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "apimanager.CreateTransactionRequest": {
+            "type": "object",
+            "properties": {
+                "account_id": {
+                    "type": "string"
+                },
+                "amount": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "operation_type_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "apimanager.CreateTransactionResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "apimanager.GenericResponse-apimanager_CreateAccountResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "result": {
+                    "$ref": "#/definitions/apimanager.CreateAccountResponse"
+                }
+            }
+        },
+        "apimanager.GenericResponse-apimanager_CreateTransactionResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "result": {
+                    "$ref": "#/definitions/apimanager.CreateTransactionResponse"
+                }
+            }
+        },
+        "apimanager.GenericResponse-apimanager_GetAccountResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "result": {
+                    "$ref": "#/definitions/apimanager.GetAccountResponse"
+                }
+            }
+        },
+        "apimanager.GenericResponse-apimanager_GetTransactionResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "result": {
+                    "$ref": "#/definitions/apimanager.GetTransactionResponse"
+                }
+            }
+        },
+        "apimanager.GenericResponse-string": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "string"
+                }
+            }
+        },
+        "apimanager.GetAccountResponse": {
+            "type": "object",
+            "properties": {
+                "account_id": {
+                    "type": "string"
+                },
+                "document_number": {
+                    "type": "string"
+                }
+            }
+        },
+        "apimanager.GetTransactionRequest": {
+            "type": "object",
+            "properties": {
+                "account_id": {
+                    "type": "string"
+                },
+                "amount_greater": {
+                    "type": "number"
+                },
+                "amount_less": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "event_date_from": {
+                    "type": "string"
+                },
+                "event_date_to": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "operation_type_id": {
+                    "type": "integer"
+                },
+                "paging": {
+                    "$ref": "#/definitions/apimanager.Paging"
+                }
+            }
+        },
+        "apimanager.GetTransactionResponse": {
+            "type": "object",
+            "properties": {
+                "paging": {
+                    "$ref": "#/definitions/apimanager.Paging"
+                },
+                "transactions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/apimanager.Transaction"
+                    }
+                }
+            }
+        },
+        "apimanager.Paging": {
+            "type": "object",
+            "properties": {
+                "next_page": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                }
+            }
+        },
+        "apimanager.Transaction": {
+            "type": "object",
+            "properties": {
+                "account_id": {
+                    "type": "string"
+                },
+                "amount": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "event_date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "operation_type_id": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

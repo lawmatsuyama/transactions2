@@ -16,6 +16,18 @@ func NewTransactionAPI(tr domain.TransactionUseCase) TransactionAPI {
 	return TransactionAPI{Transaction: tr}
 }
 
+// Create godoc
+//
+//	@Summary		API to create transaction in the application.
+//	@Description	Receives transaction data and registered it in application.
+//	@Tags			transactions
+//	@Accept			json
+//	@Produce		json
+//	@Param			create_transaction_request			body		CreateTransactionRequest								true	"Create Transaction Request"
+//	@Success		200				{object}	apimanager.GenericResponse[CreateTransactionResponse]
+//	@Failure		400				{object}	apimanager.GenericResponse[string]
+//	@Failure		404				{object}	apimanager.GenericResponse[string]
+//	@Router			/transactions [post]
 func (api TransactionAPI) Create(w http.ResponseWriter, r *http.Request) {
 	request, err := Decode[CreateTransactionRequest](r.Body)
 	if err != nil {
@@ -33,6 +45,18 @@ func (api TransactionAPI) Create(w http.ResponseWriter, r *http.Request) {
 	HandleResponse(w, r, FromAccountID(id), err)
 }
 
+// Get godoc
+//
+//	@Summary		API to get transactions by filter.
+//	@Description	List transactions by giving filter.
+//	@Tags			transactions
+//	@Accept			json
+//	@Produce		json
+//	@Param			get_transaction_request			body		GetTransactionRequest								true	"Get Transaction Request"
+//	@Success		200				{object}	apimanager.GenericResponse[GetTransactionResponse]
+//	@Failure		400				{object}	apimanager.GenericResponse[string]
+//	@Failure		404				{object}	apimanager.GenericResponse[string]
+//	@Router			/transactions/query [post]
 func (api TransactionAPI) Get(w http.ResponseWriter, r *http.Request) {
 	request, err := Decode[GetTransactionRequest](r.Body)
 	if err != nil {

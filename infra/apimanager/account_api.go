@@ -17,6 +17,18 @@ func NewAccountAPI(acc domain.AccountUseCase) AccountAPI {
 	return AccountAPI{Account: acc}
 }
 
+// Create godoc
+//
+//	@Summary		API to create account in the application.
+//	@Description	Receives account data and registered it in application.
+//	@Tags			accounts
+//	@Accept			json
+//	@Produce		json
+//	@Param			create_account_request			body		CreateAccountRequest								true	"Create Account Request"
+//	@Success		200				{object}	apimanager.GenericResponse[CreateAccountResponse]
+//	@Failure		400				{object}	apimanager.GenericResponse[string]
+//	@Failure		404				{object}	apimanager.GenericResponse[string]
+//	@Router			/accounts [post]
 func (api AccountAPI) Create(w http.ResponseWriter, r *http.Request) {
 	request, err := Decode[CreateAccountRequest](r.Body)
 	if err != nil {
@@ -34,6 +46,18 @@ func (api AccountAPI) Create(w http.ResponseWriter, r *http.Request) {
 	HandleResponse(w, r, FromAccountID(id), err)
 }
 
+// GetByID godoc
+//
+//	@Summary		API to get account by ID in the application.
+//	@Description	Receives path param account ID.
+//	@Tags			accounts
+//	@Accept			json
+//	@Produce		json
+//	@Param			accountID			path		string				true	"Account ID"
+//	@Success		200				{object}	apimanager.GenericResponse[GetAccountResponse]
+//	@Failure		400				{object}	apimanager.GenericResponse[string]
+//	@Failure		404				{object}	apimanager.GenericResponse[string]
+//	@Router			/accounts/{accountID} [get]
 func (api AccountAPI) GetByID(w http.ResponseWriter, r *http.Request) {
 	accID := chi.URLParam(r, "accountID")
 	request := domain.AccountFilter{ID: accID}

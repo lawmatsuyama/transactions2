@@ -7,6 +7,7 @@ type AccountFilter struct {
 	DocumentNumber DocumentNumber `json:"document_number"`
 	CreatedAtFrom  time.Time      `json:"created_at_from"`
 	CreatedAtTo    time.Time      `json:"created_at_to"`
+	Paging         *Paging        `json:"paging" bson:"paging"`
 }
 
 func (filter AccountFilter) IsValid() error {
