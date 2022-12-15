@@ -52,7 +52,7 @@ func (db TransactionRepository) Get(ctx context.Context, filterTr domain.Transac
 	filter = filterSimple(filter, "description", filterTr.Description, isZeroComparable[string])
 	filter = filterRange(filter, "event_date", filterTr.EventDateFrom, filterTr.EventDateTo, isZeroTime)
 
-	sort := bson.D{bsonE("created_at", 1), bsonE("_id", 1)}
+	sort := bson.D{bsonE("event_date", 1), bsonE("_id", 1)}
 	opts := options.Find().
 		SetSort(sort).
 		SetBatchSize(batchSizeTransaction).

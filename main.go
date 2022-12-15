@@ -22,7 +22,7 @@ func init() {
 }
 
 // @title Swagger Pismo Transactions API
-// @version 2.0
+// @version 1.0
 // @description API to create and list accounts and transactions of user.
 // @termsOfService http://swagger.io/terms/
 
