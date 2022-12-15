@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/lawmatsuyama/pismo-transactions/domain"
+	"github.com/lawmatsuyama/pismo-transactions/pkg/testhelpers"
 	"github.com/lawmatsuyama/pismo-transactions/usecases"
 	"github.com/stretchr/testify/assert"
 )
@@ -62,7 +63,7 @@ func testCreateAccount(t *testing.T, name, fakeAccFile, fakeAccID string, fakeEr
 		return fakeAccID
 	}
 
-	fakeAcc := domain.ReadJSON[domain.Account](t, fakeAccFile)
+	fakeAcc := testhelpers.ReadJSON[domain.Account](t, fakeAccFile)
 	var gotInCreateRepo domain.Account
 	CreateAccountMock = func(ctx context.Context, acc domain.Account) (err error) {
 		gotInCreateRepo = acc
@@ -72,13 +73,13 @@ func testCreateAccount(t *testing.T, name, fakeAccFile, fakeAccID string, fakeEr
 	useCase := usecases.NewAccountUseCase(mockAccount{})
 	gotID, gotErr := useCase.Create(context.Background(), fakeAcc)
 	if *update {
-		domain.CreateJSON(t, expInCreateRepoFile, gotInCreateRepo)
+		testhelpers.CreateJSON(t, expInCreateRepoFile, gotInCreateRepo)
 		return
 	}
 
 	assert.Equal(t, expErr, gotErr, "exp error should be equal got error")
 	assert.Equal(t, expID, gotID, "exp ID should be equal got ID")
-	domain.CompareWithFile(t, "compare input create account repository", expInCreateRepoFile, gotInCreateRepo)
+	testhelpers.CompareWithFile(t, "compare input create account repository", expInCreateRepoFile, gotInCreateRepo)
 }
 
 func TestGetAccounts(t *testing.T) {
@@ -124,11 +125,11 @@ func TestGetAccounts(t *testing.T) {
 }
 
 func testGetAccounts(t *testing.T, name, fakeFilterFile, fakeGetAccsRepoFile, expInGetAccRepoFile, expAccsFile string, fakeErrGetAccRepo, expErr error) {
-	fakeFilter := domain.ReadJSON[domain.AccountFilter](t, fakeFilterFile)
+	fakeFilter := testhelpers.ReadJSON[domain.AccountFilter](t, fakeFilterFile)
 	var gotInGetAccRepo domain.AccountFilter
 	GetAccountMock = func(ctx context.Context, filter domain.AccountFilter) (accs []domain.Account, err error) {
 		gotInGetAccRepo = filter
-		fakeGetAccRepo := domain.ReadJSON[[]domain.Account](t, fakeGetAccsRepoFile)
+		fakeGetAccRepo := testhelpers.ReadJSON[[]domain.Account](t, fakeGetAccsRepoFile)
 		return fakeGetAccRepo, fakeErrGetAccRepo
 	}
 
@@ -136,12 +137,12 @@ func testGetAccounts(t *testing.T, name, fakeFilterFile, fakeGetAccsRepoFile, ex
 	gotAccs, gotErr := useCase.Get(context.Background(), fakeFilter)
 
 	if *update {
-		domain.CreateJSON(t, expInGetAccRepoFile, gotInGetAccRepo)
-		domain.CreateJSON(t, expAccsFile, gotAccs)
+		testhelpers.CreateJSON(t, expInGetAccRepoFile, gotInGetAccRepo)
+		testhelpers.CreateJSON(t, expAccsFile, gotAccs)
 		return
 	}
 
 	assert.Equal(t, expErr, gotErr, "exp error should be equal got error")
-	domain.CompareWithFile(t, "compare input get create account repository", expInGetAccRepoFile, gotInGetAccRepo)
-	domain.CompareWithFile(t, "compare return get create account repository", expAccsFile, gotAccs)
+	testhelpers.CompareWithFile(t, "compare input get create account repository", expInGetAccRepoFile, gotInGetAccRepo)
+	testhelpers.CompareWithFile(t, "compare return get create account repository", expAccsFile, gotAccs)
 }

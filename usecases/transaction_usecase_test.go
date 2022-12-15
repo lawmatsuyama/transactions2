@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/lawmatsuyama/pismo-transactions/domain"
+	"github.com/lawmatsuyama/pismo-transactions/pkg/testhelpers"
 	"github.com/lawmatsuyama/pismo-transactions/usecases"
 	"github.com/stretchr/testify/assert"
 )
@@ -99,19 +100,19 @@ func testCreateTransaction(t *testing.T, name, fakeTrFile, fakeTrID string, fake
 		return nil, fakeErrGetAccRepo
 	}
 
-	fakeTr := domain.ReadJSON[domain.Transaction](t, fakeTrFile)
+	fakeTr := testhelpers.ReadJSON[domain.Transaction](t, fakeTrFile)
 	useCase := usecases.NewTransactionUseCase(mockTransaction{}, mockAccount{})
 	gotID, gotErr := useCase.Create(context.Background(), fakeTr)
 	if *update {
-		domain.CreateJSON(t, expInCreateTrRepoFile, gotInCreateTrRepo)
-		domain.CreateJSON(t, expInGetAccRepoFile, gotInGetAccRepo)
+		testhelpers.CreateJSON(t, expInCreateTrRepoFile, gotInCreateTrRepo)
+		testhelpers.CreateJSON(t, expInGetAccRepoFile, gotInGetAccRepo)
 		return
 	}
 
 	assert.Equal(t, expErr, gotErr, "exp error should be equal got error")
 	assert.Equal(t, expID, gotID, "exp ID should be equal got ID")
-	domain.CompareWithFile(t, "compare input get account repository", expInGetAccRepoFile, gotInGetAccRepo)
-	domain.CompareWithFile(t, "compare input create transaction repository", expInCreateTrRepoFile, gotInCreateTrRepo)
+	testhelpers.CompareWithFile(t, "compare input get account repository", expInGetAccRepoFile, gotInGetAccRepo)
+	testhelpers.CompareWithFile(t, "compare input create transaction repository", expInCreateTrRepoFile, gotInCreateTrRepo)
 
 }
 
@@ -182,22 +183,22 @@ func TestGetTransactions(t *testing.T) {
 
 func testGetTransactions(t *testing.T, name, fakeFilterTrFile, fakeGetTrsRepoFile string, limitByPage int64, fakeErrGetTrRepo error, expInGetTrRepoFile, expTrsPagFile string, expErr error) {
 	domain.LimitByPage = limitByPage
-	fakeFilterTr := domain.ReadJSON[domain.TransactionFilter](t, fakeFilterTrFile)
+	fakeFilterTr := testhelpers.ReadJSON[domain.TransactionFilter](t, fakeFilterTrFile)
 	var gotInGetTrRepo domain.TransactionFilter
 	GetTransactionsMock = func(ctx context.Context, tr domain.TransactionFilter) ([]*domain.Transaction, error) {
 		gotInGetTrRepo = tr
-		return domain.ReadJSON[[]*domain.Transaction](t, fakeGetTrsRepoFile), fakeErrGetTrRepo
+		return testhelpers.ReadJSON[[]*domain.Transaction](t, fakeGetTrsRepoFile), fakeErrGetTrRepo
 	}
 
 	useCase := usecases.NewTransactionUseCase(mockTransaction{}, mockAccount{})
 	gotTrsPag, gotErr := useCase.Get(context.Background(), fakeFilterTr)
 	if *update {
-		domain.CreateJSON(t, expTrsPagFile, gotTrsPag)
-		domain.CreateJSON(t, expInGetTrRepoFile, gotInGetTrRepo)
+		testhelpers.CreateJSON(t, expTrsPagFile, gotTrsPag)
+		testhelpers.CreateJSON(t, expInGetTrRepoFile, gotInGetTrRepo)
 		return
 	}
 
 	assert.Equal(t, expErr, gotErr, "exp error should be equal got error")
-	domain.CompareWithFile(t, "compare input get transaction repository", expInGetTrRepoFile, gotInGetTrRepo)
-	domain.CompareWithFile(t, "compare return get transactions paging", expTrsPagFile, gotTrsPag)
+	testhelpers.CompareWithFile(t, "compare input get transaction repository", expInGetTrRepoFile, gotInGetTrRepo)
+	testhelpers.CompareWithFile(t, "compare return get transactions paging", expTrsPagFile, gotTrsPag)
 }
