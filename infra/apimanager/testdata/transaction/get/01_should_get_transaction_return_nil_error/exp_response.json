@@ -1,0 +1,42 @@
+{
+	"result": {
+		"paging": {
+			"next_page": 2,
+			"page": 1
+		},
+		"transactions": [
+			{
+				"account_id": "f982c57d-7632-40f5-b03e-a582f9a63e16",
+				"amount": -14.3,
+				"description": "teste1",
+				"event_date": "2022-10-10T09:00:00-03:00",
+				"id": "123456",
+				"operation_type_id": "COMPRA A VISTA"
+			},
+			{
+				"account_id": "f982c57d-7632-40f5-b03e-a582f9a63e16",
+				"amount": -60.3,
+				"description": "teste2",
+				"event_date": "2022-10-11T09:00:00-03:00",
+				"id": "88888",
+				"operation_type_id": "COMPRA PARCELADA"
+			},
+			{
+				"account_id": "f982c57d-7632-40f5-b03e-a582f9a63e16",
+				"amount": -14.3,
+				"description": "teste3",
+				"event_date": "2022-10-10T09:00:00-03:00",
+				"id": "999999",
+				"operation_type_id": "COMPRA A VISTA"
+			},
+			{
+				"account_id": "f982c57d-7632-40f5-b03e-a582f9a63e16",
+				"amount": -60.3,
+				"description": "teste4",
+				"event_date": "2022-10-11T09:00:00-03:00",
+				"id": "3333333",
+				"operation_type_id": "COMPRA PARCELADA"
+			}
+		]
+	}
+}

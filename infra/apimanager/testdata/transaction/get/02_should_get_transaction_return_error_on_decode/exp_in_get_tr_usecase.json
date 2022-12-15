@@ -1,0 +1,10 @@
+{
+	"id": "",
+	"account_id": "",
+	"description": "",
+	"operation_type_id": 0,
+	"amount_greater": 0,
+	"amount_less": 0,
+	"event_date_from": "0001-01-01T00:00:00Z",
+	"event_date_to": "0001-01-01T00:00:00Z"
+}

@@ -39,3 +39,18 @@ func (m mockAccount) Create(ctx context.Context, acc domain.Account) (id string,
 func (m mockAccount) Get(ctx context.Context, filter domain.AccountFilter) (accs []domain.Account, err error) {
 	return GetAccountMock(ctx, filter)
 }
+
+var (
+	CreateTransactionMock func(ctx context.Context, tr domain.Transaction) (id string, err error)
+	GetTransactionMock    func(ctx context.Context, filter domain.TransactionFilter) (trsPag domain.TransactionsPaging, err error)
+)
+
+type mockTransaction struct{}
+
+func (m mockTransaction) Create(ctx context.Context, tr domain.Transaction) (id string, err error) {
+	return CreateTransactionMock(ctx, tr)
+}
+
+func (m mockTransaction) Get(ctx context.Context, filter domain.TransactionFilter) (trsPag domain.TransactionsPaging, err error) {
+	return GetTransactionMock(ctx, filter)
+}

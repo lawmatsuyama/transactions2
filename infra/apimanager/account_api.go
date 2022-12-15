@@ -10,11 +10,11 @@ import (
 
 // AccountAPI represents an API for account
 type AccountAPI struct {
-	UseCase domain.AccountUseCase
+	Account domain.AccountUseCase
 }
 
-func NewAccountAPI(useCase domain.AccountUseCase) AccountAPI {
-	return AccountAPI{UseCase: useCase}
+func NewAccountAPI(acc domain.AccountUseCase) AccountAPI {
+	return AccountAPI{Account: acc}
 }
 
 func (api AccountAPI) Create(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +25,7 @@ func (api AccountAPI) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := context.Background()
-	id, err := api.UseCase.Create(ctx, request.ToAccount())
+	id, err := api.Account.Create(ctx, request.ToAccount())
 	if err != nil {
 		HandleResponse[*string](w, r, nil, err)
 		return
@@ -38,7 +38,7 @@ func (api AccountAPI) GetByID(w http.ResponseWriter, r *http.Request) {
 	accID := chi.URLParam(r, "accountID")
 	request := domain.AccountFilter{ID: accID}
 	ctx := context.Background()
-	accs, err := api.UseCase.Get(ctx, request)
+	accs, err := api.Account.Get(ctx, request)
 	if err != nil {
 		HandleResponse[*string](w, r, nil, err)
 		return

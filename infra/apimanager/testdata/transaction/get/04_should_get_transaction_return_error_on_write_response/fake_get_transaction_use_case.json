@@ -1,0 +1,40 @@
+{
+	"transactions": [
+		{
+			"id": "123456",
+			"account_id": "f982c57d-7632-40f5-b03e-a582f9a63e16",
+			"description": "teste1",
+			"operation_type_id": 1,
+			"amount": -14.3,
+			"event_date": "2022-10-10T09:00:00-03:00"
+		},
+		{
+			"id": "88888",
+			"account_id": "f982c57d-7632-40f5-b03e-a582f9a63e16",
+			"description": "teste2",
+			"operation_type_id": 2,
+			"amount": -60.3,
+			"event_date": "2022-10-11T09:00:00-03:00"
+		},
+		{
+			"id": "999999",
+			"account_id": "f982c57d-7632-40f5-b03e-a582f9a63e16",
+			"description": "teste3",
+			"operation_type_id": 1,
+			"amount": -14.3,
+			"event_date": "2022-10-10T09:00:00-03:00"
+		},
+		{
+			"id": "3333333",
+			"account_id": "f982c57d-7632-40f5-b03e-a582f9a63e16",
+			"description": "teste4",
+			"operation_type_id": 2,
+			"amount": -60.3,
+			"event_date": "2022-10-11T09:00:00-03:00"
+		}
+	],
+	"paging": {
+		"page": 1,
+		"next_page": 2
+	}
+}
