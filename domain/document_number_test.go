@@ -38,6 +38,11 @@ func TestDocumentNumberIsValid(t *testing.T) {
 			DocumentNumber: "12345678S10",
 			ExpectedError:  domain.ErrInvalidDocumentNumber,
 		},
+		{
+			Name:           "06_should_return_invalid_document_with_empty",
+			DocumentNumber: "",
+			ExpectedError:  domain.ErrInvalidDocumentNumber,
+		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {
