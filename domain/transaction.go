@@ -6,7 +6,7 @@ import (
 )
 
 type Transaction struct {
-	ID              string        `json:"id" bson:"id"`
+	ID              string        `json:"id" bson:"_id"`
 	AccountID       string        `json:"account_id" bson:"account_id"`
 	Description     string        `json:"description" bson:"description"`
 	OperationTypeID OperationType `json:"operation_type_id" bson:"operation_type_id"`
