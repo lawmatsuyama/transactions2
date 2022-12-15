@@ -70,9 +70,9 @@ type CreateTransactionResponse struct {
 }
 
 // FromTransaction reerns a CreateTransactionResponse from domain.Transaction
-func FromTransaction(tr domain.Transaction) CreateTransactionResponse {
+func FromTransactionID(id string) CreateTransactionResponse {
 	return CreateTransactionResponse{
-		ID: tr.ID,
+		ID: id,
 	}
 }
 

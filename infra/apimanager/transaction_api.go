@@ -43,7 +43,7 @@ func (api TransactionAPI) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	HandleResponse(w, r, FromAccountID(id), err)
+	HandleResponse(w, r, FromTransactionID(id), err)
 }
 
 // Get godoc

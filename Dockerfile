@@ -9,7 +9,7 @@ RUN go test ./... -v
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 \
     go build -a -ldflags '-linkmode=external' -installsuffix cgo -o pismo-transactions
 RUN ls -lah ${BUILD_PATH}/pismo-transactions
-RUN cp ${BUILD_PATH}/pismo- /bin/pismo-transactions
+RUN cp ${BUILD_PATH}/pismo-transactions /bin/pismo-transactions
 
 FROM alpine:3.11
 RUN apk update && apk add --no-cache ca-certificates tzdata libc6-compat
