@@ -23,9 +23,13 @@ func (useCase TransactionUseCase) Create(ctx context.Context, tr domain.Transact
 		return
 	}
 
-	_, err = useCase.account.Get(ctx, domain.AccountFilter{ID: tr.AccountID})
+	accs, err := useCase.account.Get(ctx, domain.AccountFilter{ID: tr.AccountID})
 	if err != nil {
 		return
+	}
+
+	if len(accs) == 0 {
+		return "", domain.ErrAccountNotFound
 	}
 
 	tr.SetID()
