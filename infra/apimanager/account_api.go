@@ -13,6 +13,7 @@ type AccountAPI struct {
 	Account domain.AccountUseCase
 }
 
+// NewAccountAPI returns a new AccountAPI
 func NewAccountAPI(acc domain.AccountUseCase) AccountAPI {
 	return AccountAPI{Account: acc}
 }

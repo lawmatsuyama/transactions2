@@ -36,7 +36,7 @@ func (tr *Transaction) SetID() {
 	}
 }
 
-// SetEventDate set the current time in transaction event date
+// SetCurrentTimeToEventDate set the current time in transaction event date
 func (tr *Transaction) SetCurrentTimeToEventDate() {
 	tr.EventDate = Now()
 }

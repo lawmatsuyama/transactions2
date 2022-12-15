@@ -15,16 +15,19 @@ const (
 	batchSizeAccount int32 = 20
 )
 
+// AccountRepository implements domain.AccountRepository interface. It contains the database client.
 type AccountRepository struct {
 	Client *mongo.Client
 }
 
+// NewAccountRepository returns a new AccountRepository
 func NewAccountRepository(client *mongo.Client) AccountRepository {
 	return AccountRepository{
 		Client: client,
 	}
 }
 
+// Create receive domain.Account and insert it in database collection
 func (db AccountRepository) Create(ctx context.Context, acc domain.Account) error {
 	l := log.WithField("accounts", acc)
 	c := db.Client.Database("account").Collection("accounts")
@@ -37,6 +40,7 @@ func (db AccountRepository) Create(ctx context.Context, acc domain.Account) erro
 	return nil
 }
 
+// Get receives a filter of account, query it in database and returns the result in domain.Account
 func (db AccountRepository) Get(ctx context.Context, filterAcc domain.AccountFilter) (accs []domain.Account, err error) {
 	l := log.WithField("filter", filterAcc)
 	c := db.Client.Database("account").Collection("accounts")

@@ -49,6 +49,7 @@ func CreateJSON(t *testing.T, file string, object any) {
 	}
 }
 
+// RequestPost is a helper to create a http request post
 func RequestPost(t *testing.T, httpMethod, file string) *http.Request {
 	bReq := Read(t, file)
 	req, err := http.NewRequest("POST", "http://localhost", bytes.NewBuffer(bReq))

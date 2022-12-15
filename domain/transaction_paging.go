@@ -6,7 +6,7 @@ type TransactionsPaging struct {
 	Paging       *Paging        `json:"paging,omitempty"`
 }
 
-// NewTransactionsPage
+// NewTransactionsPage returns a new TransactionsPaging
 func NewTransactionsPage(trs []*Transaction, pg *Paging) TransactionsPaging {
 	return TransactionsPaging{Transactions: trs, Paging: pg}
 }

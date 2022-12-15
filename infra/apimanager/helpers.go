@@ -9,12 +9,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Decode is a helper function to decode a reader into T object
 func Decode[T any](r io.Reader) (T, error) {
 	var obj T
 	err := json.NewDecoder(r).Decode(&obj)
 	return obj, err
 }
 
+// HandleResponse evaluate error and return an GenericResponse of T object
 func HandleResponse[T any](w http.ResponseWriter, r *http.Request, in T, err error) {
 	var errStr string
 	statusCode := http.StatusOK

@@ -6,11 +6,13 @@ import (
 	"github.com/lawmatsuyama/pismo-transactions/domain"
 )
 
+// TransactionUseCase implements domain.TransactionUseCase interface
 type TransactionUseCase struct {
 	transaction domain.TransactionRepository
 	account     domain.AccountRepository
 }
 
+// NewTransactionUseCase returns a new TransactionUseCase
 func NewTransactionUseCase(transactionRepository domain.TransactionRepository, accountRepository domain.AccountRepository) TransactionUseCase {
 	return TransactionUseCase{
 		transaction: transactionRepository,
@@ -18,6 +20,7 @@ func NewTransactionUseCase(transactionRepository domain.TransactionRepository, a
 	}
 }
 
+// Create check if transaction is valid and create it in application
 func (useCase TransactionUseCase) Create(ctx context.Context, tr domain.Transaction) (id string, err error) {
 	if err = tr.IsValid(); err != nil {
 		return
@@ -44,6 +47,7 @@ func (useCase TransactionUseCase) Create(ctx context.Context, tr domain.Transact
 	return tr.ID, nil
 }
 
+// Get returns transactions by given TransactionFilter
 func (useCase TransactionUseCase) Get(ctx context.Context, filter domain.TransactionFilter) (trsPag domain.TransactionsPaging, err error) {
 	if err = filter.IsValid(); err != nil {
 		return

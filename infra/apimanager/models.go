@@ -12,27 +12,33 @@ type GenericResponse[T any] struct {
 	Result T      `json:"result"`
 }
 
+// CreateAccountRequest represents a create account operation request
 type CreateAccountRequest struct {
 	DocumentNumber string `json:"document_number"`
 }
 
+// ToAccount returns domain Account from CreateAccountRequest
 func (request CreateAccountRequest) ToAccount() domain.Account {
 	return domain.NewAccount(domain.DocumentNumber(request.DocumentNumber))
 }
 
+// CreateAccountResponse represents a create account operation response
 type CreateAccountResponse struct {
 	AccountID string `json:"account_id"`
 }
 
+// FromAccountID returns a CreateAccountResponse from account ID
 func FromAccountID(id string) CreateAccountResponse {
 	return CreateAccountResponse{AccountID: id}
 }
 
+// GetAccountResponse represents a get account operation response
 type GetAccountResponse struct {
 	AccountID      string `json:"account_id"`
 	DocumentNumber string `json:"document_number"`
 }
 
+// FromAccount returns a GetAccountResponse from domain.Account
 func FromAccount(acc domain.Account) GetAccountResponse {
 	return GetAccountResponse{
 		AccountID:      acc.ID,
@@ -40,6 +46,7 @@ func FromAccount(acc domain.Account) GetAccountResponse {
 	}
 }
 
+// CreateTransactionRequest represents a create transaction operation request
 type CreateTransactionRequest struct {
 	AccountID       string  `json:"account_id"`
 	Description     string  `json:"description"`
@@ -47,6 +54,7 @@ type CreateTransactionRequest struct {
 	Amount          float64 `json:"amount"`
 }
 
+// ToTransaction returns a domain.Transaction from CreateTransactionRequest
 func (request CreateTransactionRequest) ToTransaction() domain.Transaction {
 	return domain.Transaction{
 		AccountID:       request.AccountID,
@@ -56,10 +64,12 @@ func (request CreateTransactionRequest) ToTransaction() domain.Transaction {
 	}
 }
 
+// CreateTransactionResponse represents a create transaction operation response
 type CreateTransactionResponse struct {
 	ID string `json:"id"`
 }
 
+// FromTransaction reerns a CreateTransactionResponse from domain.Transaction
 func FromTransaction(tr domain.Transaction) CreateTransactionResponse {
 	return CreateTransactionResponse{
 		ID: tr.ID,
@@ -72,6 +82,7 @@ type Paging struct {
 	NextPage *int64 `json:"next_page,omitempty"`
 }
 
+// GetTransactionRequest represents a get transaction operation request
 type GetTransactionRequest struct {
 	ID              string    `json:"id"`
 	AccountID       string    `json:"account_id"`
@@ -84,6 +95,7 @@ type GetTransactionRequest struct {
 	Paging          *Paging   `json:"paging,omitempty"`
 }
 
+// ToTransaction returns a domain.TransactionFilter from GetTransactionRequest
 func (request GetTransactionRequest) ToTransaction() domain.TransactionFilter {
 	filter := domain.TransactionFilter{
 		ID:              request.ID,
@@ -114,11 +126,13 @@ type Transaction struct {
 	EventDate       string  `json:"event_date"`
 }
 
+// GetTransactionResponse represents a get transaction operation response
 type GetTransactionResponse struct {
 	Transactions []Transaction `json:"transactions"`
 	Paging       *Paging       `json:"paging" bson:"paging"`
 }
 
+// FromTransactionPaging returns a GetTransactionResponse from domain.TransactionPaging
 func FromTransactionPaging(trsPag domain.TransactionsPaging) GetTransactionResponse {
 	trs := make([]Transaction, len(trsPag.Transactions))
 	for i, tr := range trsPag.Transactions {

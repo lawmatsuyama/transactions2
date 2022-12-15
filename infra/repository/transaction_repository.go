@@ -15,16 +15,19 @@ const (
 	batchSizeTransaction int32 = 20
 )
 
+// TransactionRepository implements domain.TransactionRepository interface. It contains a database client.
 type TransactionRepository struct {
 	Client *mongo.Client
 }
 
+// NewTransactionRepository returns a new TransactionRepository
 func NewTransactionRepository(client *mongo.Client) TransactionRepository {
 	return TransactionRepository{
 		Client: client,
 	}
 }
 
+// Create receive domain.Transaction and insert it in database collection
 func (db TransactionRepository) Create(ctx context.Context, tr domain.Transaction) error {
 	l := log.WithField("transaction", tr)
 	c := db.Client.Database("account").Collection("transactions")
@@ -37,6 +40,7 @@ func (db TransactionRepository) Create(ctx context.Context, tr domain.Transactio
 	return nil
 }
 
+// Get receives a filter of transaction, query it in database and returns the result in domain.Transaction
 func (db TransactionRepository) Get(ctx context.Context, filterTr domain.TransactionFilter) (trs []*domain.Transaction, err error) {
 	l := log.WithField("filter", filterTr)
 	c := db.Client.Database("account").Collection("transactions")

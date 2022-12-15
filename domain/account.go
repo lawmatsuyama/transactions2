@@ -30,7 +30,7 @@ func (acc *Account) SetID() {
 	}
 }
 
-// SetCreatedAt set current time in account created at
+// SetCurrentTimeToCreatedAt set current time in account created at
 func (acc *Account) SetCurrentTimeToCreatedAt() {
 	acc.CreatedAt = Now()
 }

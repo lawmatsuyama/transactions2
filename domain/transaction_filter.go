@@ -15,7 +15,7 @@ type TransactionFilter struct {
 	Paging          *Paging       `json:"paging,omitempty"`
 }
 
-// Validate valids transaction filter
+// IsValid valids transaction filter
 func (tr TransactionFilter) IsValid() error {
 	if tr.OperationTypeID != 0 {
 		if err := tr.OperationTypeID.IsValid(); err != nil {
