@@ -29,7 +29,7 @@ git clone https://github.com/lawmatsuyama/pismo-transactions.git
 cd pismo-transactions
 ```
 
-- In transactions directory, run the command below to start the API
+- In pismo-transactions directory, run the command below to start the API
 ```
 docker-compose up -d
 ```
