@@ -86,6 +86,16 @@ func TestCreateTransaction(t *testing.T) {
 			ExpTransactionID:                        "",
 			ExpErr:                                  domain.ErrAccountNotFound,
 		},
+		{
+			Name:                                    "07_should_create_transaction_with_empty_account_id_return_invalid_account",
+			FakeTransactionFile:                     "./testdata/transaction/create/07_should_create_transaction_with_empty_account_id_return_invalid_account/fake_transaction.json",
+			FakeTransactionID:                       "123456",
+			FakeAccountFile:                         "./testdata/transaction/create/07_should_create_transaction_with_empty_account_id_return_invalid_account/fake_account.json",
+			ExpInputGetAccountRepositoryFile:        "./testdata/transaction/create/07_should_create_transaction_with_empty_account_id_return_invalid_account/exp_in_get_account_repo.json",
+			ExpInputCreateTransactionRepositoryFile: "./testdata/transaction/create/07_should_create_transaction_with_empty_account_id_return_invalid_account/exp_in_create_transaction_repo.json",
+			ExpTransactionID:                        "",
+			ExpErr:                                  domain.ErrInvalidAccount,
+		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {

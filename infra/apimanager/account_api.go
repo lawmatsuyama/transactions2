@@ -61,6 +61,10 @@ func (api AccountAPI) Create(w http.ResponseWriter, r *http.Request) {
 //	@Router			/accounts/{accountID} [get]
 func (api AccountAPI) GetByID(w http.ResponseWriter, r *http.Request) {
 	accID := chi.URLParam(r, "accountID")
+	if accID == "" {
+		HandleResponse[*string](w, r, nil, domain.ErrInvalidAccount)
+		return
+	}
 	request := domain.AccountFilter{ID: accID}
 	ctx := context.Background()
 	accs, err := api.Account.Get(ctx, request)

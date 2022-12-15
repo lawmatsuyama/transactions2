@@ -17,6 +17,10 @@ type Transaction struct {
 
 // IsValid check if transaction is valid
 func (tr Transaction) IsValid() error {
+	if tr.AccountID == "" {
+		return ErrInvalidAccount
+	}
+
 	if tr.Amount == 0 {
 		return ErrTransactionZeroAmount
 	}

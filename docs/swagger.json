@@ -1,14 +1,14 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "API to create,list account and transactions of user.",
-        "title": "Swagger Accounts API",
+        "description": "API to create and list accounts and transactions of user.",
+        "title": "Swagger Pismo Transactions API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "Lawrence Matsuyama",
             "email": "law.matsuyama@outlook.com"
         },
-        "version": "2.0"
+        "version": "1.0"
     },
     "host": "localhost:8080",
     "basePath": "/",

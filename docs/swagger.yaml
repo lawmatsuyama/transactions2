@@ -125,10 +125,10 @@ info:
   contact:
     email: law.matsuyama@outlook.com
     name: Lawrence Matsuyama
-  description: API to create,list account and transactions of user.
+  description: API to create and list accounts and transactions of user.
   termsOfService: http://swagger.io/terms/
-  title: Swagger Accounts API
-  version: "2.0"
+  title: Swagger Pismo Transactions API
+  version: "1.0"
 paths:
   /accounts:
     post:
