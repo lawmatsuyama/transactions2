@@ -15,6 +15,7 @@ type UUIDGenerator interface {
 // AccountRepository represents an account repository
 type AccountRepository interface {
 	Create(ctx context.Context, acc Account) (err error)
+	Update(ctx context.Context, acc Account) (err error)
 	Get(ctx context.Context, filter AccountFilter) (accs []Account, err error)
 }
 

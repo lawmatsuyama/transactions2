@@ -19,8 +19,10 @@ func TestCreateTransaction(t *testing.T) {
 		FakeAccountFile                         string
 		FakeErrCreateTransactionRepository      error
 		FakeErrGetAccountRepository             error
+		FakeErrUpdateAccountRepository          error
 		ExpInputGetAccountRepositoryFile        string
 		ExpInputCreateTransactionRepositoryFile string
+		ExpInputUpdateAccountRepositoryFile     string
 		ExpTransactionID                        string
 		ExpErr                                  error
 	}{
@@ -31,6 +33,7 @@ func TestCreateTransaction(t *testing.T) {
 			FakeAccountFile:                         "./testdata/transaction/create/01_should_create_transaction_return_nil_error/fake_account.json",
 			ExpInputGetAccountRepositoryFile:        "./testdata/transaction/create/01_should_create_transaction_return_nil_error/exp_in_get_account_repo.json",
 			ExpInputCreateTransactionRepositoryFile: "./testdata/transaction/create/01_should_create_transaction_return_nil_error/exp_in_create_transaction_repo.json",
+			ExpInputUpdateAccountRepositoryFile:     "./testdata/transaction/create/01_should_create_transaction_return_nil_error/exp_in_update_account_repo.json",
 			ExpTransactionID:                        "123456",
 			ExpErr:                                  nil,
 		},
@@ -42,6 +45,7 @@ func TestCreateTransaction(t *testing.T) {
 			FakeErrGetAccountRepository:             domain.ErrAccountNotFound,
 			ExpInputGetAccountRepositoryFile:        "./testdata/transaction/create/02_should_create_transaction_return_not_found_account/exp_in_get_account_repo.json",
 			ExpInputCreateTransactionRepositoryFile: "./testdata/transaction/create/02_should_create_transaction_return_not_found_account/exp_in_create_transaction_repo.json",
+			ExpInputUpdateAccountRepositoryFile:     "./testdata/transaction/create/02_should_create_transaction_return_not_found_account/exp_in_update_account_repo.json",
 			ExpTransactionID:                        "",
 			ExpErr:                                  domain.ErrAccountNotFound,
 		},
@@ -53,6 +57,7 @@ func TestCreateTransaction(t *testing.T) {
 			FakeErrCreateTransactionRepository:      domain.ErrUnknown,
 			ExpInputGetAccountRepositoryFile:        "./testdata/transaction/create/03_should_create_transaction_return_unknow_error_on_create_repository/exp_in_get_account_repo.json",
 			ExpInputCreateTransactionRepositoryFile: "./testdata/transaction/create/03_should_create_transaction_return_unknow_error_on_create_repository/exp_in_create_transaction_repo.json",
+			ExpInputUpdateAccountRepositoryFile:     "./testdata/transaction/create/03_should_create_transaction_return_unknow_error_on_create_repository/exp_in_update_account_repo.json",
 			ExpTransactionID:                        "",
 			ExpErr:                                  domain.ErrUnknown,
 		},
@@ -63,6 +68,7 @@ func TestCreateTransaction(t *testing.T) {
 			FakeAccountFile:                         "./testdata/transaction/create/04_should_create_transaction_return_invalid_operation_type/fake_account.json",
 			ExpInputGetAccountRepositoryFile:        "./testdata/transaction/create/04_should_create_transaction_return_invalid_operation_type/exp_in_get_account_repo.json",
 			ExpInputCreateTransactionRepositoryFile: "./testdata/transaction/create/04_should_create_transaction_return_invalid_operation_type/exp_in_create_transaction_repo.json",
+			ExpInputUpdateAccountRepositoryFile:     "./testdata/transaction/create/04_should_create_transaction_return_invalid_operation_type/exp_in_update_account_repo.json",
 			ExpTransactionID:                        "",
 			ExpErr:                                  domain.ErrInvalidOperationType,
 		},
@@ -73,6 +79,7 @@ func TestCreateTransaction(t *testing.T) {
 			FakeAccountFile:                         "./testdata/transaction/create/05_should_create_transaction_payment_return_nil_error/fake_account.json",
 			ExpInputGetAccountRepositoryFile:        "./testdata/transaction/create/05_should_create_transaction_payment_return_nil_error/exp_in_get_account_repo.json",
 			ExpInputCreateTransactionRepositoryFile: "./testdata/transaction/create/05_should_create_transaction_payment_return_nil_error/exp_in_create_transaction_repo.json",
+			ExpInputUpdateAccountRepositoryFile:     "./testdata/transaction/create/05_should_create_transaction_payment_return_nil_error/exp_in_update_account_repo.json",
 			ExpTransactionID:                        "123456",
 			ExpErr:                                  nil,
 		},
@@ -83,6 +90,7 @@ func TestCreateTransaction(t *testing.T) {
 			FakeAccountFile:                         "./testdata/transaction/create/06_should_create_transaction_with_no_accounts_return_not_found_account/fake_account.json",
 			ExpInputGetAccountRepositoryFile:        "./testdata/transaction/create/06_should_create_transaction_with_no_accounts_return_not_found_account/exp_in_get_account_repo.json",
 			ExpInputCreateTransactionRepositoryFile: "./testdata/transaction/create/06_should_create_transaction_with_no_accounts_return_not_found_account/exp_in_create_transaction_repo.json",
+			ExpInputUpdateAccountRepositoryFile:     "./testdata/transaction/create/06_should_create_transaction_with_no_accounts_return_not_found_account/exp_in_update_account_repo.json",
 			ExpTransactionID:                        "",
 			ExpErr:                                  domain.ErrAccountNotFound,
 		},
@@ -93,18 +101,45 @@ func TestCreateTransaction(t *testing.T) {
 			FakeAccountFile:                         "./testdata/transaction/create/07_should_create_transaction_with_empty_account_id_return_invalid_account/fake_account.json",
 			ExpInputGetAccountRepositoryFile:        "./testdata/transaction/create/07_should_create_transaction_with_empty_account_id_return_invalid_account/exp_in_get_account_repo.json",
 			ExpInputCreateTransactionRepositoryFile: "./testdata/transaction/create/07_should_create_transaction_with_empty_account_id_return_invalid_account/exp_in_create_transaction_repo.json",
+			ExpInputUpdateAccountRepositoryFile:     "./testdata/transaction/create/07_should_create_transaction_with_empty_account_id_return_invalid_account/exp_in_update_account_repo.json",
 			ExpTransactionID:                        "",
 			ExpErr:                                  domain.ErrInvalidAccount,
+		},
+		{
+			Name:                                    "08_should_create_transaction_return_account_has_no_limit",
+			FakeTransactionFile:                     "./testdata/transaction/create/08_should_create_transaction_return_account_has_no_limit/fake_transaction.json",
+			FakeTransactionID:                       "123456",
+			FakeAccountFile:                         "./testdata/transaction/create/08_should_create_transaction_return_account_has_no_limit/fake_account.json",
+			ExpInputGetAccountRepositoryFile:        "./testdata/transaction/create/08_should_create_transaction_return_account_has_no_limit/exp_in_get_account_repo.json",
+			ExpInputCreateTransactionRepositoryFile: "./testdata/transaction/create/08_should_create_transaction_return_account_has_no_limit/exp_in_create_transaction_repo.json",
+			ExpInputUpdateAccountRepositoryFile:     "./testdata/transaction/create/08_should_create_transaction_return_account_has_no_limit/exp_in_update_account_repo.json",
+			ExpTransactionID:                        "",
+			ExpErr:                                  domain.ErrHasNoLimit,
 		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {
-			testCreateTransaction(t, tc.Name, tc.FakeTransactionFile, tc.FakeTransactionID, tc.FakeAccountFile, tc.FakeErrCreateTransactionRepository, tc.FakeErrGetAccountRepository, tc.ExpInputGetAccountRepositoryFile, tc.ExpInputCreateTransactionRepositoryFile, tc.ExpTransactionID, tc.ExpErr)
+			testCreateTransaction(t,
+				tc.Name,
+				tc.FakeTransactionFile,
+				tc.FakeTransactionID,
+				tc.FakeAccountFile,
+				tc.FakeErrCreateTransactionRepository,
+				tc.FakeErrGetAccountRepository,
+				tc.FakeErrUpdateAccountRepository,
+				tc.ExpInputGetAccountRepositoryFile,
+				tc.ExpInputCreateTransactionRepositoryFile,
+				tc.ExpInputUpdateAccountRepositoryFile,
+				tc.ExpTransactionID,
+				tc.ExpErr)
 		})
 	}
 }
 
-func testCreateTransaction(t *testing.T, name, fakeTrFile, fakeTrID, fakeAccFile string, fakeErrCreateTrRepo, fakeErrGetAccRepo error, expInGetAccRepoFile, expInCreateTrRepoFile, expID string, expErr error) {
+func testCreateTransaction(t *testing.T, name, fakeTrFile, fakeTrID, fakeAccFile string,
+	fakeErrCreateTrRepo, fakeErrGetAccRepo, fakeErrAccUpdRepo error,
+	expInGetAccRepoFile, expInCreateTrRepoFile, expInAccUpdRepoFile, expID string,
+	expErr error) {
 	domain.Now = func() time.Time {
 		return domain.TimeSaoPaulo(time.Date(2022, 10, 10, 12, 0, 0, 0, time.UTC))
 	}
@@ -127,12 +162,19 @@ func testCreateTransaction(t *testing.T, name, fakeTrFile, fakeTrID, fakeAccFile
 		return fakeAcc, fakeErrGetAccRepo
 	}
 
+	var gotInUpdateAccRepo domain.Account
+	UpdateAccountMock = func(ctx context.Context, acc domain.Account) (err error) {
+		gotInUpdateAccRepo = acc
+		return fakeErrAccUpdRepo
+	}
+
 	fakeTr := testhelpers.ReadJSON[domain.Transaction](t, fakeTrFile)
 	useCase := usecases.NewTransactionUseCase(mockTransaction{}, mockAccount{})
 	gotID, gotErr := useCase.Create(context.Background(), fakeTr)
 	if *update {
 		testhelpers.CreateJSON(t, expInCreateTrRepoFile, gotInCreateTrRepo)
 		testhelpers.CreateJSON(t, expInGetAccRepoFile, gotInGetAccRepo)
+		testhelpers.CreateJSON(t, expInAccUpdRepoFile, gotInUpdateAccRepo)
 		return
 	}
 
@@ -140,6 +182,7 @@ func testCreateTransaction(t *testing.T, name, fakeTrFile, fakeTrID, fakeAccFile
 	assert.Equal(t, expID, gotID, "exp ID should be equal got ID")
 	testhelpers.CompareWithFile(t, "compare input get account repository", expInGetAccRepoFile, gotInGetAccRepo)
 	testhelpers.CompareWithFile(t, "compare input create transaction repository", expInCreateTrRepoFile, gotInCreateTrRepo)
+	testhelpers.CompareWithFile(t, "compare input update transaction repository", expInAccUpdRepoFile, gotInUpdateAccRepo)
 
 }
 

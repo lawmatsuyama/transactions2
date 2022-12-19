@@ -40,13 +40,26 @@ func (useCase TransactionUseCase) Create(ctx context.Context, tr domain.Transact
 		return "", domain.ErrAccountNotFound
 	}
 
+	acc := accs[0]
+
 	tr.SetID()
 	tr.SetAmountSign()
 	tr.SetCurrentTimeToEventDate()
+	if !acc.HasLimit(tr) {
+		return "", domain.ErrHasNoLimit
+	}
+
+	acc.SetLimitByTransaction(tr)
 
 	err = useCase.transaction.Create(ctx, tr)
 	if err != nil {
 		l.WithError(err).Error("failed to create transaction")
+		return "", err
+	}
+
+	err = useCase.account.Update(ctx, acc)
+	if err != nil {
+		l.WithError(err).Error("failed to update account")
 		return "", err
 	}
 

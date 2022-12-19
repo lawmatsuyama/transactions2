@@ -46,6 +46,10 @@ var (
 	ErrTransactionsNotFound = ErrorTransaction{ErrorOrigin: errors.New("transactions not found"), StatusCode: http.StatusNotFound}
 	// ErrAccountNotFound is an error to return when no accounts found
 	ErrAccountNotFound = ErrorTransaction{ErrorOrigin: errors.New("account not found"), StatusCode: http.StatusNotFound}
+	// ErrLimitIsNegative is an error to return when avalable credit limit is negative
+	ErrLimitIsNegative = ErrorTransaction{ErrorOrigin: errors.New("available credit limit is negative"), StatusCode: http.StatusBadRequest}
+	// ErrHasNoLimit is an error to return when account has no limit
+	ErrHasNoLimit = ErrorTransaction{ErrorOrigin: errors.New("account has no available credit limit"), StatusCode: http.StatusBadRequest}
 	// ErrUnknown is an error to return when service get an unknown error
 	ErrUnknown = ErrorTransaction{ErrorOrigin: errors.New("unknow error"), StatusCode: http.StatusBadRequest}
 )

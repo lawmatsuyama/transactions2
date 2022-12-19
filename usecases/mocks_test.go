@@ -9,6 +9,7 @@ import (
 var (
 	CreateAccountMock func(ctx context.Context, acc domain.Account) (err error)
 	GetAccountMock    func(ctx context.Context, filter domain.AccountFilter) (accs []domain.Account, err error)
+	UpdateAccountMock func(ctx context.Context, acc domain.Account) (err error)
 )
 
 type mockAccount struct{}
@@ -19,6 +20,10 @@ func (m mockAccount) Create(ctx context.Context, acc domain.Account) (err error)
 
 func (m mockAccount) Get(ctx context.Context, filter domain.AccountFilter) (accs []domain.Account, err error) {
 	return GetAccountMock(ctx, filter)
+}
+
+func (m mockAccount) Update(ctx context.Context, acc domain.Account) (err error) {
+	return UpdateAccountMock(ctx, acc)
 }
 
 var (

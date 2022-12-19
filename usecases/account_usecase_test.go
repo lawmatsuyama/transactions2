@@ -45,6 +45,14 @@ func TestCreateAccount(t *testing.T) {
 			ExpID:                        "",
 			ExpError:                     domain.ErrUnknown,
 		},
+		{
+			Name:                         "04_should_create_account_return_error_available_credit_limit_is_negative",
+			FakeAccountFile:              "./testdata/account/create/04_should_create_account_return_error_available_credit_limit_is_negative/fake_account.json",
+			FakeAccountID:                "999999",
+			ExpInputCreateRepositoryFile: "./testdata/account/create/04_should_create_account_return_error_available_credit_limit_is_negative/exp_in_create_repository.json",
+			ExpID:                        "",
+			ExpError:                     domain.ErrLimitIsNegative,
+		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {

@@ -2,6 +2,8 @@ basePath: /
 definitions:
   apimanager.CreateAccountRequest:
     properties:
+      available_credit_limit:
+        type: number
       document_number:
         type: string
     type: object

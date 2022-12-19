@@ -1,6 +1,7 @@
 {
 	"result": {
 		"account_id": "123456",
-		"document_number": "32877847900"
+		"document_number": "32877847900",
+		"available_credit_limit": 0.0
 	}
 }

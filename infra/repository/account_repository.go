@@ -80,3 +80,20 @@ func (db AccountRepository) Get(ctx context.Context, filterAcc domain.AccountFil
 	return accs, err
 
 }
+
+// Update
+func (db AccountRepository) Update(ctx context.Context, acc domain.Account) error {
+	l := log.WithField("accounts", acc)
+	c := db.Client.Database("account").Collection("accounts")
+
+	filter := bson.D{bsonE("_id", acc.ID)}
+	update := bson.D{bsonE("$set", CreateDocFromStruct(acc))}
+
+	_, err := c.UpdateOne(ctx, filter, update)
+	if err != nil {
+		l.WithError(err).Error("Failed to update accounts")
+		err = domain.ErrUnknown
+	}
+
+	return err
+}

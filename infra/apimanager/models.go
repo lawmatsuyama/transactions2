@@ -14,12 +14,13 @@ type GenericResponse[T any] struct {
 
 // CreateAccountRequest represents a create account operation request
 type CreateAccountRequest struct {
-	DocumentNumber string `json:"document_number"`
+	DocumentNumber       string  `json:"document_number"`
+	AvailableCreditLimit float64 `json:"available_credit_limit"`
 }
 
 // ToAccount returns domain Account from CreateAccountRequest
 func (request CreateAccountRequest) ToAccount() domain.Account {
-	return domain.NewAccount(domain.DocumentNumber(request.DocumentNumber))
+	return domain.NewAccount(domain.DocumentNumber(request.DocumentNumber), request.AvailableCreditLimit)
 }
 
 // CreateAccountResponse represents a create account operation response
@@ -34,15 +35,17 @@ func FromAccountID(id string) CreateAccountResponse {
 
 // GetAccountResponse represents a get account operation response
 type GetAccountResponse struct {
-	AccountID      string `json:"account_id"`
-	DocumentNumber string `json:"document_number"`
+	AccountID            string  `json:"account_id"`
+	DocumentNumber       string  `json:"document_number"`
+	AvailableCreditLimit float64 `json:"available_credit_limit"`
 }
 
 // FromAccount returns a GetAccountResponse from domain.Account
 func FromAccount(acc domain.Account) GetAccountResponse {
 	return GetAccountResponse{
-		AccountID:      acc.ID,
-		DocumentNumber: acc.DocumentNumber.String(),
+		AccountID:            acc.ID,
+		DocumentNumber:       acc.DocumentNumber.String(),
+		AvailableCreditLimit: acc.AvailableCreditLimit,
 	}
 }
 

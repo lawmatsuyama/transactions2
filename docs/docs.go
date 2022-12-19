@@ -207,6 +207,9 @@ const docTemplate = `{
         "apimanager.CreateAccountRequest": {
             "type": "object",
             "properties": {
+                "available_credit_limit": {
+                    "type": "number"
+                },
                 "document_number": {
                     "type": "string"
                 }
