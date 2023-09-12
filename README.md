@@ -1,4 +1,4 @@
-# pismo-transactions
+# transactions 2.0
 
 API to create and list transactions and accounts.
 This API was built using:
