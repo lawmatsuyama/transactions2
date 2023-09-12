@@ -19,21 +19,21 @@ It is using hexagonal architecture:
 
 ## How to start API
 
-You need to have `docker` and `docker-compose` installed before execute `pismo-transactions` api
+You need to have `docker` and `docker-compose` installed before execute `transactions2` api
 
 In a terminal shell:
 
 - Clone this repository
 ```
-git clone https://github.com/lawmatsuyama/pismo-transactions.git
-cd pismo-transactions
+git clone https://github.com/lawmatsuyama/transactions2.git
+cd transactions2
 ```
 
-- In pismo-transactions directory, run the command below to start the API
+- In transactions2 directory, run the command below to start the API
 ```
 docker-compose up -d
 ```
-It will build the API and create containers to mongodb and pismo-transactions API
+It will build the API and create containers to mongodb and transactions2 API
 
 Observation: It will use the net ports 27017 and 8080. So be attention to don't lock those ports before run the command above.
 
